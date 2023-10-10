@@ -1,0 +1,74 @@
+<!-- Complete project details: https://randomnerdtutorials.com/esp32-plot-readings-charts-multiple/ -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Drip Irrigation Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+</head>
+
+<body>
+  <div class="navbar">
+    <div class="navbar-links"><a href="./index.html">Home</a></div>
+    <div class="navbar-links"><a href="./live.html">Live Graphs</a></div>
+    <div class="navbar-links"><a href="./compare.html">Compare Graphs</a></div>
+    <div class="navbar-links"><a href="./alldata.html">All Data</a></div>
+  </div>
+  <br>
+  <br>
+  <div class="topnav">
+
+
+    <h1>SMART DRIP</h1>
+    <br>
+    <h3>Plant 1</h3>
+  </div>
+
+  <div class="content">
+    <div class="card-grid">
+      <div class="card">
+        <p class="card-title">RPM Chart</p>
+        <div id="chart-RPM" class="chart-container"></div>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="card-grid">
+      <div class="card">
+        <p class="card-title">Moisture Chart</p>
+        <div id="chart-moisture" class="chart-container"></div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="pump-cont">
+        <div class="pump_status">
+          <p>Current Water Pump Running Status</p>
+          <div class="pump_color">
+            <h6 id="pump_status"></h6>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="space_cont"></div> -->
+
+      <div class="water_usage">
+        <p>Current Water Usage</p>
+        <h6 id="water_usage"></h6>
+      </div>
+
+      <div class="failure">
+        <p>Failure Status</p>
+        <h6 id="failure_status"></h6>
+      </div>
+    </div>
+  </div>
+  <script src="script_P1.js"></script>
+</body>
+
+</html>
