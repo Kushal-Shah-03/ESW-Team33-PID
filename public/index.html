@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Motor RPM Dashboard</title>
+    <link
+      href="https://unpkg.com/tailwindcss@^2.0/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-200 min-h-screen flex items-center justify-center">
+    <div class="container mx-auto p-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+          <h2 class="text-xl font-bold mb-4 text-blue-600">Motor RPM</h2>
+          <div></div>
+          <div
+            id="rpmDisplay"
+            class="text-4xl font-bold text-blue-900 align-middle"
+          >
+            0 RPM
+          </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+          <h2 class="text-xl font-bold mb-4 text-blue-600 text-center">
+            Control Parameters
+          </h2>
+
+          <div class="mb-4">
+            <label for="desiredRPM" class="block font-bold mb-1 text-blue-900"
+              >Desired RPM:</label
+            >
+            <input
+              type="number"
+              id="desiredRPM"
+              min="0"
+              step="100"
+              class="w-full p-2 border border-blue-500 rounded-lg focus:outline-none"
+            />
+          </div>
+
+          <div class="mb-4">
+            <label for="kp" class="block font-bold mb-1 text-blue-900"
+              >Proportional Gain (Kp):</label
+            >
+            <input
+              type="number"
+              id="kp"
+              step="0.1"
+              class="w-full p-2 border border-blue-500 rounded-lg focus:outline-none"
+            />
+          </div>
+
+          <div class="mb-4">
+            <label for="ki" class="block font-bold mb-1 text-blue-900"
+              >Integral Gain (Ki):</label
+            >
+            <input
+              type="number"
+              id="ki"
+              step="0.1"
+              class="w-full p-2 border border-blue-500 rounded-lg focus:outline-none"
+            />
+          </div>
+
+          <div class="mb-4">
+            <label for="kd" class="block font-bold mb-1 text-blue-900"
+              >Derivative Gain (Kd):</label
+            >
+            <input
+              type="number"
+              id="kd"
+              step="0.1"
+              class="w-full p-2 border border-blue-500 rounded-lg focus:outline-none"
+            />
+          </div>
+
+          <button
+            onclick="updateParameters()"
+            class="block bg-blue-500 text-white py-2 px-4 mt-4 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+          >
+            Update Parameters
+          </button>
+        </div>
+      </div>
+    </div>
+    <script>
+      let currentRPM = 0;
+      let desired_RPM = 100;
+
+      const inputStyle =
+        "w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500";
+      const buttonStyle =
+        "block bg-blue-500 text-white py-2 px-4 mt-4 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800";
+
+      function updateRPM() {
+        let variation;
+
+        variation = ((Math.random() - 0.5) * 20) % desired_RPM;
+        const rpmWithVariation = parseInt(desired_RPM) + parseInt(variation);
+        console.log("RPM with variation:", rpmWithVariation);
+        document.getElementById("rpmDisplay").innerText =
+          parseFloat(rpmWithVariation).toFixed(2) + " RPM";
+      }
+
+      function updateParameters() {
+        const desiredRPM = document.getElementById("desiredRPM").value;
+        desired_RPM = desiredRPM;
+        const kp = document.getElementById("kp").value;
+        const ki = document.getElementById("ki").value;
+        const kd = document.getElementById("kd").value;
+
+        console.log("Desired RPM:", desiredRPM);
+        console.log("Kp:", kp);
+        console.log("Ki:", ki);
+        console.log("Kd:", kd);
+
+        const data = {
+          rpm: desiredRPM,
+          kp: kp,
+          ki: ki,
+          kd: kd,
+        };
+
+        fetch("/api/updateRPM", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+
+        document.getElementById("desiredRPM").value = "";
+        document.getElementById("kp").value = "";
+        document.getElementById("ki").value = "";
+        document.getElementById("kd").value = "";
+      }
+
+      setInterval(updateRPM, 2000);
+    </script>
+  </body>
+</html>
