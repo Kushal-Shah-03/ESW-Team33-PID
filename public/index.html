@@ -96,13 +96,35 @@
         "block bg-blue-500 text-white py-2 px-4 mt-4 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800";
 
       function updateRPM() {
-        let variation;
+        // let variation;
 
-        variation = ((Math.random() - 0.5) * 20) % desired_RPM;
-        const rpmWithVariation = parseInt(desired_RPM) + parseInt(variation);
-        console.log("RPM with variation:", rpmWithVariation);
-        document.getElementById("rpmDisplay").innerText =
-          parseFloat(rpmWithVariation).toFixed(2) + " RPM";
+        // variation = ((Math.random() - 0.5) * 20) % desired_RPM;
+        // const rpmWithVariation = parseInt(desired_RPM) + parseInt(variation);
+        // console.log("RPM with variation:", rpmWithVariation);
+        var rpmWithVariation = 0;
+        fetch(
+          "https://api.thingspeak.com/channels/2308331/fields/1.json?api_key=3S3HG2D8EJ6Y1RO4&results=2",
+          {
+            method: "GET",
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            rpmWithVariation = data.feeds[1].field1;  
+            console.log("RPM with variation:", rpmWithVariation);
+            document.getElementById("rpmDisplay").innerText =
+              parseFloat(rpmWithVariation).toFixed(2) + " RPM";
+              fetch("/api/updatecurrRPM", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ rpm: rpmWithVariation }),
+              });
+          });
+
+
       }
 
       function updateParameters() {
@@ -132,14 +154,13 @@
           body: JSON.stringify(data),
         });
 
-
         document.getElementById("desiredRPM").value = "";
         document.getElementById("kp").value = "";
         document.getElementById("ki").value = "";
         document.getElementById("kd").value = "";
       }
 
-      setInterval(updateRPM, 2000);
+      setInterval(updateRPM, 1000);
     </script>
   </body>
 </html>

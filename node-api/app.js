@@ -7,7 +7,8 @@ var kp = 0;
 var ki = 0;
 var kd = 0;
 var count = 0;
-
+var currrpm = 0;
+var count1=0;
 // Create an instance of express
 const app = express();
 
@@ -18,10 +19,17 @@ app.use(bodyParser.json());
 
 // Catch all other routes and return the index file
 app.get('/', (req, res) => {
-    console.log(__dirname);
+    // console.log(__dirname);
     // res.send("Hello World");
     const path = require('path');
     const full_path = path.join(__dirname, '../public/index.html');
+    res.sendFile(full_path);
+}
+);
+
+app.get('/graph', (req, res) => {
+    const path = require('path');
+    const full_path = path.join(__dirname, '../public/graph.html');
     res.sendFile(full_path);
 }
 );
@@ -75,6 +83,31 @@ app.get('/api/getkd', (req, res) => {
     }
     else {
         res.send("No data");
+    }
+}
+);
+
+app.post('/api/updatecurrRPM', (req, res) => {
+    console.log(req.body);
+    currrpm = req.body.rpm;
+    console.log("RPM:", currrpm);
+    count1++;
+    res.send("OK");
+}
+);
+
+
+app.get('/api/getCurrRPM', (req, res) => {
+    if(count1>0)
+    {
+        const data = {
+            RPM: currrpm
+        };
+        res.send(data);
+    }
+    else
+    {
+        res.send("0");
     }
 }
 );
