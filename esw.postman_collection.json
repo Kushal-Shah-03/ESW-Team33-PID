@@ -1,0 +1,219 @@
+{
+	"info": {
+		"_postman_id": "62760896-65bf-4bdf-801e-64aae8080ed9",
+		"name": "esw",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26977505"
+	},
+	"item": [
+		{
+			"name": "Create DC-Motor-RPM AE",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-M2M-Origin",
+						"value": "admin:admin",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json;ty=2",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"m2m:cnt\":{\n        \"rn\": \"DC-Motor-RPM\",\n        \"lbl\": [\n            \"Label-1\",\n            \"Label-2\"\n        ],\n        \"mni\": 120\n\n    }\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5089/~/in-cse/in-name/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5089",
+					"path": [
+						"~",
+						"in-cse",
+						"in-name",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create RPM Container",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-M2M-Origin",
+						"value": "admin:admin",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json;ty=3",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"m2m:cnt\":{\n        \"rn\": \"RPM\",\n        \"lbl\": [\n            \"Label-1\",\n            \"Label-2\"\n        ],\n        \"mni\": 10000\n\n    }\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5089/~/in-cse/in-name/DC-Motor-RPM",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5089",
+					"path": [
+						"~",
+						"in-cse",
+						"in-name",
+						"DC-Motor-RPM"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create descriptor cnt",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-M2M-Origin",
+						"value": "admin:admin",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json;ty=3",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"m2m:cnt\":{\n        \"rn\": \"Descriptor\",\n        \"lbl\": [\n            \"Label-1\",\n            \"Label-2\"\n        ],\n        \"mni\": 10000\n\n    }\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5089/~/in-cse/in-name/DC-Motor-RPM/RPM",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5089",
+					"path": [
+						"~",
+						"in-cse",
+						"in-name",
+						"DC-Motor-RPM",
+						"RPM"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Data container",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-M2M-Origin",
+						"value": "admin:admin",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json;ty=3",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"m2m:cnt\":{\n        \"rn\": \"Data\",\n        \"lbl\": [\n            \"Label-1\",\n            \"Label-2\"\n        ],\n        \"mni\" : 10000\n\n    }\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5089/~/in-cse/in-name/DC-Motor-RPM/RPM",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5089",
+					"path": [
+						"~",
+						"in-cse",
+						"in-name",
+						"DC-Motor-RPM",
+						"RPM"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Descriptor Cin",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-M2M-Origin",
+						"value": "admin:admin",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json;ty=4",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"m2m:cin\":{\n        \"lbl\":[\n            \"Label-1\",\n            \"Label-2\"\n        ],\n        \"con\":\"[RPM]\"\n\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5089/~/in-cse/in-name/DC-Motor-RPM/RPM/Descriptor",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5089",
+					"path": [
+						"~",
+						"in-cse",
+						"in-name",
+						"DC-Motor-RPM",
+						"RPM",
+						"Descriptor"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
