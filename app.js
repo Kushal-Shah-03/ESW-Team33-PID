@@ -22,14 +22,14 @@ app.get('/', (req, res) => {
     // console.log(__dirname);
     // res.send("Hello World");
     const path = require('path');
-    const full_path = path.join(__dirname, '../public/index.html');
+    const full_path = path.join(__dirname, 'public/index.html');
     res.sendFile(full_path);
 }
 );
 
 app.get('/graph', (req, res) => {
     const path = require('path');
-    const full_path = path.join(__dirname, '../public/graph.html');
+    const full_path = path.join(__dirname, 'public/graph.html');
     res.sendFile(full_path);
 }
 );
@@ -113,6 +113,6 @@ app.get('/api/getCurrRPM', (req, res) => {
 );
 
 // Start the server
-app.listen(3000, () => {
-    console.log('Server started on port 3000');
+app.listen(8080, () => {
+    console.log('Server started on port 8080');
 });
