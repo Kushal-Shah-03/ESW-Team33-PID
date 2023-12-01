@@ -36,10 +36,10 @@ app.get('/graph', (req, res) => {
 
 app.post('/api/updateRPM', (req, res) => {
     console.log(req.body);
-    rpm = req.body.rpm;
-    kp = req.body.kp;
-    ki = req.body.ki;
-    kd = req.body.kd;
+    rpm = parseFloat(req.body.rpm);
+    kp = parseFloat(req.body.kp);
+    ki = parseFloat(req.body.ki);
+    kd = parseFloat(req.body.kd);
     if (req.body.rpm == '') {
         rpm = 80;
     }
@@ -96,7 +96,7 @@ app.get('/api/getdata', (req, res) => {
 
 app.post('/api/updatecurrRPM', (req, res) => {
     console.log(req.body);
-    currrpm = req.body.rpm;
+    currrpm = parseFloat(req.body.currRPM);
     console.log("RPM:", currrpm);
     count1++;
     res.send("OK");
