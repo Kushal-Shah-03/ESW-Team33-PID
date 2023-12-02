@@ -318,8 +318,8 @@ function plotRPM(jsonValue) {
     console.log(ki);
     console.log(kd);
 
-    if (chartT.series[i].data.length > 40) {
-      chartT.series[i].addPoint({
+    if (chartT.series[0].data.length > 40) {
+      chartT.series[0].addPoint({
         x: x,
         y: y,
         kp: kp,
@@ -327,7 +327,7 @@ function plotRPM(jsonValue) {
         kd: kd
       }, true, true, true);
     } else {
-      chartT.series[i].addPoint({
+      chartT.series[0].addPoint({
         x: x,
         y: y,
         kp: kp,
