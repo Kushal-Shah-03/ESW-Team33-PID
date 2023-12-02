@@ -2,6 +2,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+var om2mrpm=0;
+var cin='0';
+
 var rpm = 80;
 var kp = 5;
 var ki = 0.001;
@@ -114,6 +117,21 @@ app.get('/api/getCurrRPM', (req, res) => {
     else {
         res.send("0");
     }
+}
+);
+
+app.post('/api/updateOM2MRPM', (req, res) => {
+    console.log(req.body);
+    om2mrpm=req.body.rpm;
+    cin=req.body.cin;
+    om2mrpm = parseInt(om2mrpm);
+    console.log("RPM:", om2mrpm);
+    res.send("OK");
+}
+);
+
+app.get('/api/getOM2MRPM', (req, res) => {
+    res.send({ RPM: om2mrpm , CIN: cin});
 }
 );
 

@@ -300,6 +300,7 @@ function plotRPM(jsonValue) {
 
 var data1=0;
 var data2=0;
+var prev_cin='0';
 
 setInterval(sendReadings, 1000);
 // function sendReadings() {
@@ -316,13 +317,18 @@ setInterval(sendReadings, 1000);
 
 async function sendReadings()
 {
-    fetch ("http://127.0.0.1:3000/api/getCurrRPM")
+    fetch ("https://esw-2cne.onrender.com/api/getOM2MRPM")
     .then(response => response.json())
     .then(data => {
       console.log(data);
       data1=data['RPM']
+      data2=data['CIN']
       console.log(data1);
-      plotRPM(data);
+      if(prev_cin!=data2)
+      {
+        plotRPM(data);
+      }
+      prev_cin=data2;
     }
     );
     // const response = await fetch ("/api/getCurrRPM");
