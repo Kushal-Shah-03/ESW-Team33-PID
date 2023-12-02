@@ -325,7 +325,8 @@ async function sendReadings()
       data2=data['CIN']
       console.log(data1);
       console.log(data2);
-      if(prev_cin==data2)
+      console.log(prev_cin);
+      if(prev_cin===data2)
       {
         console.log("same");
       }
