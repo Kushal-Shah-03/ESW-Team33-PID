@@ -242,7 +242,16 @@ var chartT = new Highcharts.Chart({
   },
   series: [
     {
+      // name: 'RPM',
+      // type: 'line',
+      // color: '#101D42',
+      // marker: {
+      //   symbol: 'circle',
+      //   radius: 3,
+      //   fillColor: '#101D42',
+      // }
       name: 'RPM',
+      data: [],
       type: 'line',
       color: '#101D42',
       marker: {
@@ -272,7 +281,7 @@ var chartT = new Highcharts.Chart({
 
       tooltip = '<b>' + this.series.name + '</b><br/>' +
         Highcharts.dateFormat('%H:%M:%S', this.x) + '<br/>' +
-        Highcharts.numberFormat(this.y, 2) + ' RPM' + '<br/>' +
+        Highcharts.numberFormat(this.point.y, 2) + ' RPM<br/>' +
         'Kp: ' + this.point.options.kp + '<br/>' +
         'Ki: ' + this.point.options.ki + '<br/>' +
         'Kd: ' + this.point.options.kd + '<br/>';
