@@ -269,12 +269,15 @@ var chartT = new Highcharts.Chart({
   },
   tooltip: {
     formatter: function () {
-      return '<b>' + this.series.name + '</b><br/>' +
+
+      tooltip = '<b>' + this.series.name + '</b><br/>' +
         Highcharts.dateFormat('%H:%M:%S', this.x) + '<br/>' +
-        Highcharts.numberFormat(this.y, 2);
-        Highcharts.numberFormat(this.kp, 2);
-        Highcharts.numberFormat(this.ki, 2);
-        Highcharts.numberFormat(this.kd, 2);
+        Highcharts.numberFormat(this.y, 2) + ' RPM' + '<br/>' +
+        'Kp: ' + this.point.options.kp + '<br/>' +
+        'Ki: ' + this.point.options.ki + '<br/>' +
+        'Kd: ' + this.point.options.kd + '<br/>';
+      return tooltip;
+
     }
   },
 });
@@ -307,9 +310,21 @@ function plotRPM(jsonValue) {
     console.log(kd);
 
     if (chartT.series[i].data.length > 40) {
-      chartT.series[i].addPoint([x, y,kp,ki,kd], true, true, true);
+      chartT.series[i].addPoint({
+        x: x,
+        y: y,
+        kp: kp,
+        ki: ki,
+        kd: kd
+      }, true, true, true);
     } else {
-      chartT.series[i].addPoint([x, y,kp,ki,kd], true, false, true);
+      chartT.series[i].addPoint({
+        x: x,
+        y: y,
+        kp: kp,
+        ki: ki,
+        kd: kd
+      }, true, false, true);
     }
 
   // }
