@@ -267,6 +267,16 @@ var chartT = new Highcharts.Chart({
   credits: {
     enabled: false
   },
+  tooltip: {
+    formatter: function () {
+      return '<b>' + this.series.name + '</b><br/>' +
+        Highcharts.dateFormat('%H:%M:%S', this.x) + '<br/>' +
+        Highcharts.numberFormat(this.y, 2);
+        Highcharts.numberFormat(this.kp, 2);
+        Highcharts.numberFormat(this.ki, 2);
+        Highcharts.numberFormat(this.kd, 2);
+    }
+  },
 });
 
 //Plot RPM in the RPM chart
@@ -276,7 +286,7 @@ function plotRPM(jsonValue) {
   console.log(keys);
   console.log(keys.length);
 
-  for (var i = 0; i < keys.length; i++) {
+  // for (var i = 0; i < keys.length; i++) {
     const date = new Date();
     console.log("current Time", date);
     var ISToffSet = 330; //IST is 5:30; i.e. 60*5+30 = 330 in minutes 
@@ -285,17 +295,24 @@ function plotRPM(jsonValue) {
     console.log("IST Date", ISTTime);
     // var x = (new Date()).getTime();
     var x = ISTTime.getTime();
-    const key = keys[i];
+    const key = keys[0];
     var y = Number(jsonValue[key]);
     console.log(y);
 
+    var kp = Number(jsonValue['kp']);
+    var ki = Number(jsonValue['ki']);
+    var kd = Number(jsonValue['kd']);
+    console.log(kp);
+    console.log(ki);
+    console.log(kd);
+
     if (chartT.series[i].data.length > 40) {
-      chartT.series[i].addPoint([x, y], true, true, true);
+      chartT.series[i].addPoint([x, y,kp,ki,kd], true, true, true);
     } else {
-      chartT.series[i].addPoint([x, y], true, false, true);
+      chartT.series[i].addPoint([x, y,kp,ki,kd], true, false, true);
     }
 
-  }
+  // }
 }
 
 var data1=0;
@@ -322,17 +339,12 @@ async function sendReadings()
     .then(data => {
       console.log(data);
       data1=data['RPM']
-      data2=data['CIN']
       console.log(data1);
-      console.log(data2);
       console.log(typeof(data1));
-      console.log(typeof(prev_cin));
       console.log(typeof(-1));
-      console.log(prev_cin);
       if (data1 != -1) {
         plotRPM(data);
       }
-      prev_cin=data2;
     }
     );
     // const response = await fetch ("/api/getCurrRPM");

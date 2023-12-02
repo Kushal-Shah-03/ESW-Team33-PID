@@ -137,7 +137,7 @@ app.get('/api/getOM2MRPM', (req, res) => {
     if (cin==prev_cin){
         om2mrpm=-1;
     }
-    res.send({ RPM: om2mrpm , CIN: cin});
+    res.send({ RPM: om2mrpm , kp: kp, ki: ki, kd: kd});
     prev_cin=cin;
 }
 );
