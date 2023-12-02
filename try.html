@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Highcharts Example</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+</head>
+<body>
+    <div id="container" style="height: 400px;"></div>
+
+    <script>
+        var chart = Highcharts.chart('container', {
+            title: {
+                text: 'Tooltip with Multiple Values Example'
+            },
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May']
+            },
+            yAxis: {
+                title: {
+                    text: 'Values'
+                }
+            },
+            tooltip: {
+                formatter: function () {
+                    var tooltipContent = '<strong>' + Highcharts.dateFormat('%B %Y', this.x) + '</strong><br>';
+                    
+                    // Display additional values in the tooltip
+                    tooltipContent += 'Value 1: <b>' + this.point.options.value1 + '</b><br>';
+                    tooltipContent += 'Value 2: <b>' + this.point.options.value2 + '</b><br>';
+                    tooltipContent += 'Value 3: <b>' + this.point.options.value3 + '</b><br>';
+                    tooltipContent += 'Value 4: <b>' + this.point.options.value4 + '</b><br>';
+
+                    return tooltipContent;
+                }
+            },
+            series: [{
+                name: 'Combined Values',
+                data: []
+            }]
+        });
+
+        // Add data points dynamically
+        var newData = [
+            { y: 10, value1: 15, value2: 7, value3: 12, value4: 8 },
+            { y: 5, value1: 8, value2: 10, value3: 6, value4: 9 },
+            { y: 12, value1: 6, value2: 8, value3: 14, value4: 10 },
+            { y: 8, value1: 10, value2: 5, value3: 9, value4: 12 },
+            { y: 8, value1: 10, value2: 5, value3: 9, value4: 12 }
+        ];
+
+        newData.forEach(function(point) {
+            chart.series[0].addPoint(point);
+        });
+    </script>
+</body>
+</html>

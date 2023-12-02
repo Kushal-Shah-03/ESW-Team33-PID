@@ -242,7 +242,16 @@ var chartT = new Highcharts.Chart({
   },
   series: [
     {
+      // name: 'RPM',
+      // type: 'line',
+      // color: '#101D42',
+      // marker: {
+      //   symbol: 'circle',
+      //   radius: 3,
+      //   fillColor: '#101D42',
+      // }
       name: 'RPM',
+      data: [],
       type: 'line',
       color: '#101D42',
       marker: {
@@ -267,6 +276,19 @@ var chartT = new Highcharts.Chart({
   credits: {
     enabled: false
   },
+  tooltip: {
+    formatter: function () {
+
+      tooltip = '<b>' + this.series.name + '</b><br/>' +
+        Highcharts.dateFormat('%H:%M:%S', this.x) + '<br/>' +
+        Highcharts.numberFormat(this.point.y, 2) + ' RPM<br/>' +
+        'Kp: ' + this.point.options.kp + '<br/>' +
+        'Ki: ' + this.point.options.ki + '<br/>' +
+        'Kd: ' + this.point.options.kd + '<br/>';
+      return tooltip;
+
+    }
+  },
 });
 
 //Plot RPM in the RPM chart
@@ -276,7 +298,7 @@ function plotRPM(jsonValue) {
   console.log(keys);
   console.log(keys.length);
 
-  for (var i = 0; i < keys.length; i++) {
+  // for (var i = 0; i < keys.length; i++) {
     const date = new Date();
     console.log("current Time", date);
     var ISToffSet = 330; //IST is 5:30; i.e. 60*5+30 = 330 in minutes 
@@ -285,21 +307,41 @@ function plotRPM(jsonValue) {
     console.log("IST Date", ISTTime);
     // var x = (new Date()).getTime();
     var x = ISTTime.getTime();
-    const key = keys[i];
+    const key = keys[0];
     var y = Number(jsonValue[key]);
     console.log(y);
 
-    if (chartT.series[i].data.length > 40) {
-      chartT.series[i].addPoint([x, y], true, true, true);
+    var kp = Number(jsonValue['kp']);
+    var ki = Number(jsonValue['ki']);
+    var kd = Number(jsonValue['kd']);
+    console.log(kp);
+    console.log(ki);
+    console.log(kd);
+
+    if (chartT.series[0].data.length > 40) {
+      chartT.series[0].addPoint({
+        x: x,
+        y: y,
+        kp: kp,
+        ki: ki,
+        kd: kd
+      }, true, true, true);
     } else {
-      chartT.series[i].addPoint([x, y], true, false, true);
+      chartT.series[0].addPoint({
+        x: x,
+        y: y,
+        kp: kp,
+        ki: ki,
+        kd: kd
+      }, true, false, true);
     }
 
-  }
+  // }
 }
 
 var data1=0;
 var data2=0;
+var prev_cin='cin1';
 
 setInterval(sendReadings, 1000);
 // function sendReadings() {
@@ -316,13 +358,17 @@ setInterval(sendReadings, 1000);
 
 async function sendReadings()
 {
-    fetch ("http://127.0.0.1:3000/api/getCurrRPM")
+    fetch ("https://esw-2cne.onrender.com/api/getOM2MRPM")
     .then(response => response.json())
     .then(data => {
       console.log(data);
       data1=data['RPM']
       console.log(data1);
-      plotRPM(data);
+      console.log(typeof(data1));
+      console.log(typeof(-1));
+      if (data1 != -1) {
+        plotRPM(data);
+      }
     }
     );
     // const response = await fetch ("/api/getCurrRPM");
