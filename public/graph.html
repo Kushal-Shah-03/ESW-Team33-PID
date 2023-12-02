@@ -300,7 +300,7 @@ function plotRPM(jsonValue) {
 
 var data1=0;
 var data2=0;
-var prev_cin='0';
+var prev_cin='cin1';
 
 setInterval(sendReadings, 1000);
 // function sendReadings() {
@@ -324,10 +324,7 @@ async function sendReadings()
       data1=data['RPM']
       data2=data['CIN']
       console.log(data1);
-      if(prev_cin!=data2)
-      {
-        plotRPM(data);
-      }
+      // string compare
       prev_cin=data2;
     }
     );
