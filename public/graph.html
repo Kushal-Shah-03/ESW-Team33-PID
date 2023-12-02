@@ -324,7 +324,15 @@ async function sendReadings()
       data1=data['RPM']
       data2=data['CIN']
       console.log(data1);
-      // string compare
+      console.log(data2);
+      if(prev_cin==data2)
+      {
+        console.log("same");
+      }
+      else
+      {
+        plotRPM(data);
+      }
       prev_cin=data2;
     }
     );
