@@ -124,6 +124,8 @@ app.post('/api/updateOM2MRPM', (req, res) => {
     console.log(req.body);
     om2mrpm=req.body.rpm;
     cin=req.body.cin;
+    console.log("CIN:", cin);
+    console.log("RPM:", om2mrpm);
     om2mrpm = parseInt(om2mrpm);
     console.log("RPM:", om2mrpm);
     res.send("OK");
