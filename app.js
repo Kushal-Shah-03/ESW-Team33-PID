@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 
 var om2mrpm=0;
 var cin='0';
+var prev_cin='0';
 
 var rpm = 80;
 var kp = 5;
@@ -133,7 +134,11 @@ app.post('/api/updateOM2MRPM', (req, res) => {
 );
 
 app.get('/api/getOM2MRPM', (req, res) => {
+    if (cin==prev_cin){
+        om2mrpm=-1;
+    }
     res.send({ RPM: om2mrpm , CIN: cin});
+    prev_cin=cin;
 }
 );
 
